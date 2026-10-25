@@ -1,0 +1,8 @@
+groups:
+  - name: expense
+    rules:
+      - alert: ExpenseTargetDown
+        expr: up == 0
+        for: 1m
+        labels: {severity: warning}
+        annotations: {summary: "Target {{ $labels.job }} của đề 38 không phản hồi"}

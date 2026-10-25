@@ -26,3 +26,13 @@ BASE_ONLY=1 sh scripts/stop.sh
 Script sinh secret ngẫu nhiên, không ghi đè secret hoặc seed đã tồn tại. Dừng bình thường giữ dữ liệu. Giữ phiên Ubuntu-Lam mở trong buổi demo. HTTP localhost có security headers; khi triển khai Internet cần cấu hình HTTPS và cookie Secure.
 
 Mã ứng dụng ở `app/`, cấu hình chạy ở `infra/` và Compose; lệnh vận hành ở `scripts/`. Báo cáo và ảnh minh chứng bàn giao riêng, không có trên GitHub.
+
+## Giám sát hệ thống
+
+Chạy `sh scripts/start.sh` để bật đầy đủ giám sát và log. Grafana http://localhost:3038, tài khoản `admin`, mật khẩu `.local/secrets/grafana_password`. Dashboard **Nguyên Expense | Tổng quan vận hành** tự nạp. Prometheus http://localhost:9138 có 5 target: ứng dụng, Nginx, PostgreSQL, cAdvisor và Prometheus.
+
+```sh
+docker compose -f compose.yaml -f compose.monitoring.yaml -f compose.logging.yaml exec -T app node < scripts/check-services.js
+```
+
+Chờ tối thiểu hai chu kỳ scrape (30 giây) để có CPU rate. Script xác nhận CPU/RAM thuộc đúng app, Nginx và PostgreSQL của project `de38nguyen`. cAdvisor được gắn Docker/containerd socket chỉ để đọc metadata và cần quyền privileged để đo tài nguyên; đây là ngoại lệ vận hành, không áp dụng cho ứng dụng.
