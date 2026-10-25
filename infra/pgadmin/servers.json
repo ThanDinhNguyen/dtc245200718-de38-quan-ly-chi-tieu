@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Nguyên Expense PostgreSQL",
+      "Group": "Đề 38",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "expense",
+      "Username": "expense_migrate",
+      "SSLMode": "prefer"
+    }
+  }
+}

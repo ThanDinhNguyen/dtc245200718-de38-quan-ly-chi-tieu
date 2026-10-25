@@ -1,0 +1,12 @@
+.local/
+.env
+node_modules/
+docs/
+evidence/
+reports/
+*.docx
+*.pdf
+*.dump
+*.log
+__pycache__/
+~$*
